@@ -56,7 +56,7 @@ export default function OptimizedExplore() {
         ) : posts.length > 0 ? (
           <>
             <div className="grid grid-cols-1 gap-6 mb-8">
-              {posts.map((post) => (
+              {posts.map((post: any) => (
                 <PostCard key={post.id} post={post} />
               ))}
             </div>
