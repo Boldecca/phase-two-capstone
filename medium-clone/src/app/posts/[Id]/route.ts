@@ -1,16 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyToken } from '@/lib/auth'
-import { postsStore } from '@/lib/posts-store'
+import { Post } from '@/lib/post-types'
+
+// Mock posts database
+const mockPosts: Map<string, Post> = new Map()
 
 // GET post by ID
 export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
   try {
-    const post = postsStore.getPost(params.id)
+    const post = mockPosts.get(params.id)
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
     return NextResponse.json({ post })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch post' }, { status: 500 })
   }
 }
@@ -28,7 +31,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
     }
 
-    const post = postsStore.getPost(params.id)
+    const post = mockPosts.get(params.id)
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
@@ -39,17 +42,20 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 
     const { title, content, excerpt, tags, status } = await request.json()
 
-    const updated = postsStore.updatePost(params.id, {
+    const updated = {
+      ...post,
       title: title || post.title,
       content: content || post.content,
       excerpt: excerpt || post.excerpt,
       tags: tags || post.tags,
       status: status || post.status,
       publishedAt: status === 'published' && !post.publishedAt ? new Date().toISOString() : post.publishedAt,
-    })
+      updatedAt: new Date().toISOString(),
+    }
+    mockPosts.set(params.id, updated)
 
     return NextResponse.json({ post: updated })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to update post' }, { status: 500 })
   }
 }
@@ -67,7 +73,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
     }
 
-    const post = postsStore.getPost(params.id)
+    const post = mockPosts.get(params.id)
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
@@ -76,9 +82,9 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
-    postsStore.deletePost(params.id)
+    mockPosts.delete(params.id)
     return NextResponse.json({ success: true })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 })
   }
 }

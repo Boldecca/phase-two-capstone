@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/lib/auth-content'
 import { useComments } from '@/lib/swr-hooks'
 import CommentItem from './comment-item'
 import CommentForm from './comment-form'
