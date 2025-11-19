@@ -1,65 +1,199 @@
-import Image from "next/image";
+import Link from 'next/link'
+import { Button } from '@/components/ui/button'
+import { ArrowRight, Zap, Users, TrendingUp, Sparkles } from 'lucide-react'
 
-export default function Home() {
+export default function HomePage() {
+  const featuredPosts = [
+    {
+      id: 1,
+      title: 'Getting Started with Next.js 16',
+      excerpt: 'Explore the latest features and improvements in Next.js 16, including React Compiler support and performance enhancements.',
+      author: 'Sarah Chen',
+      date: 'Nov 14, 2025',
+      readTime: '5 min read',
+      slug: 'getting-started-nextjs',
+      image: '/next-js-development-modern-workspace.jpg',
+      category: 'Development',
+    },
+    {
+      id: 2,
+      title: 'The Future of Web Development',
+      excerpt: 'Exploring emerging trends, AI integration, and technologies shaping the web development landscape in 2025 and beyond.',
+      author: 'Alex Johnson',
+      date: 'Nov 13, 2025',
+      readTime: '8 min read',
+      slug: 'future-web-development',
+      image: '/future-technology-digital-landscape.jpg',
+      category: 'Technology',
+    },
+    {
+      id: 3,
+      title: 'TypeScript Best Practices',
+      excerpt: 'Master advanced TypeScript patterns, type safety, and best practices for building scalable, maintainable applications.',
+      author: 'Jordan Lee',
+      date: 'Nov 12, 2025',
+      readTime: '10 min read',
+      slug: 'typescript-best-practices',
+      image: '/typescript-code-programming.jpg',
+      category: 'Programming',
+    },
+  ]
+
+  const features = [
+    { icon: Zap, title: 'Lightning Fast', description: 'Built with performance in mind. Read articles instantly.' },
+    { icon: Users, title: 'Community Driven', description: 'Connect with thousands of writers and readers worldwide.' },
+    { icon: TrendingUp, title: 'Grow Your Audience', description: 'Reach readers, build your brand, and monetize your content.' },
+  ]
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+    <div className="bg-background">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 opacity-5">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-primary rounded-full blur-3xl" />
+          <div className="absolute bottom-10 right-10 w-72 h-72 bg-secondary rounded-full blur-3xl" />
+        </div>
+        
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 sm:py-24 lg:py-32">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
+            <div className="space-y-8 animate-fade-in-up">
+              <div className="space-y-4">
+                <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
+                  <Sparkles className="w-4 h-4" />
+                  Welcome to PublishHub
+                </span>
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-balance leading-tight">
+                  Share Your <span className="bg-gradient-to-r from-primary via-secondary to-tertiary bg-clip-text text-transparent">Ideas</span> with the World
+                </h1>
+                <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
+                  PublishHub is a modern platform for writers, developers, and creators to share stories, ideas, and expertise with a global audience. Start publishing today.
+                </p>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Link href="/write">
+                  <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-secondary hover:shadow-lg transition-all">
+                    Start Writing
+                    <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+                <Link href="/explore">
+                  <Button size="lg" variant="outline" className="hover:bg-muted">
+                    Explore Stories
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Right Image */}
+            <div className="hidden lg:flex justify-center items-center">
+              <div className="relative w-full max-w-md">
+                {/* Decorative gradient background */}
+                <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-secondary/20 to-tertiary/20 rounded-2xl blur-2xl -z-10" />
+                
+                {/* Hero Image */}
+                <img
+                  src="/writer-publishing-platform-creative-workspace.jpg"
+                  alt="PublishHub - Share your ideas with the world"
+                  className="w-full h-auto rounded-2xl shadow-2xl border border-primary/10 object-cover"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {features.map((feature, index) => {
+            const Icon = feature.icon
+            return (
+              <div key={index} className="flex flex-col items-start gap-4 p-6 rounded-lg border border-border bg-muted/30 hover:border-primary/50 transition-all hover:shadow-md">
+                <div className="p-3 rounded-lg bg-primary/10">
+                  <Icon className="w-6 h-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="font-semibold text-foreground mb-2">{feature.title}</h3>
+                  <p className="text-sm text-muted-foreground">{feature.description}</p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
+      </section>
+
+      {/* Featured Posts */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        <div className="mb-12">
+          <h2 className="text-4xl font-bold text-foreground mb-3">Featured Stories</h2>
+          <p className="text-lg text-muted-foreground">Discover the latest and most popular posts from our community</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredPosts.map((post) => (
+            <Link key={post.id} href={`/posts/${post.slug}`}>
+              <article className="group cursor-pointer overflow-hidden rounded-lg border border-border bg-background transition-all hover:border-primary hover:shadow-lg">
+                {/* Image */}
+                <div className="relative overflow-hidden h-48 bg-muted">
+                  <img 
+                    src={post.image || "/placeholder.svg"} 
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  />
+                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary/90 text-primary-foreground text-xs font-medium backdrop-blur-sm">
+                    {post.category}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <div className="p-6 space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-4 border-t border-border text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-secondary" />
+                      <span className="font-medium">{post.author}</span>
+                    </div>
+                    <span>{post.readTime}</span>
+                  </div>
+                </div>
+              </article>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 mb-8">
+        <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-gradient-to-r from-primary/5 via-secondary/5 to-tertiary/5 p-8 sm:p-12 text-center shadow-lg">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute top-10 left-20 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
+            <div className="absolute bottom-10 right-20 w-40 h-40 bg-secondary/10 rounded-full blur-2xl" />
+          </div>
+          
+          <h2 className="text-3xl sm:text-4xl font-bold text-foreground mb-4">
+            Ready to share your story?
+          </h2>
+          <p className="text-muted-foreground mb-8 max-w-2xl mx-auto text-lg">
+            Join thousands of writers and creators building their audience on PublishHub. Start publishing today and connect with readers worldwide.
           </p>
+          <Link href="/write">
+            <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:shadow-lg transition-all">
+              Create Your First Post
+              <ArrowRight className="w-4 h-4 ml-2" />
+            </Button>
+          </Link>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </section>
     </div>
-  );
+  )
 }
