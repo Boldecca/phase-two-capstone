@@ -175,6 +175,13 @@ npm run build
 ```bash
 npm run start
 ```
+### clone repository: 'https://github.com/Boldecca/phase-two-capstone.git'
+---
+
+
+### deployment 
+live demo:https://phase-two-capstone-blush.vercel.app/
+
 
 ## 🧪 Testing
 
