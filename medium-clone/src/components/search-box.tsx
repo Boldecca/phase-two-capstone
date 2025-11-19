@@ -13,7 +13,7 @@ export default function SearchBox() {
   const [results, setResults] = useState<Post[]>([])
   const [isOpen, setIsOpen] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
-  const debounceTimer = useRef<NodeJS.Timeout>()
+  const debounceTimer = useRef<NodeJS.Timeout | null>(null)
 
   const handleSearch = async (searchQuery: string) => {
     if (searchQuery.length < 2) {
