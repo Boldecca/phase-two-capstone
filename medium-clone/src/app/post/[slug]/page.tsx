@@ -112,13 +112,13 @@ export default function PostPage({ params }: PostPageProps) {
               <div className="flex items-center gap-2">
                 <Button
                   variant="ghost"
-                  size="icon"
+                  size="sm"
                   onClick={() => setIsBookmarked(!isBookmarked)}
-                  className="hover:text-primary"
+                  className="hover:text-primary p-2"
                 >
                   <Bookmark className={`w-5 h-5 ${isBookmarked ? 'fill-current text-primary' : ''}`} />
                 </Button>
-                <Button variant="ghost" size="icon" className="hover:text-primary">
+                <Button variant="ghost" size="sm" className="hover:text-primary p-2">
                   <Share2 className="w-5 h-5" />
                 </Button>
               </div>
