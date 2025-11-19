@@ -8,8 +8,8 @@ import { Share2, Bookmark, ArrowLeft } from 'lucide-react'
 import { Post } from '@/lib/post-types'
 import MarkdownPreview from '@/components/rich-editor/markdown-preview'
 import OptimizedCommentsSection from '@/components/comments/optmized-comments'
-import OptimizedClapButton from '@/components/reactions/optimized-clap-button'
-import OptimizedFollowButton from '@/components/follow-button-optimized'
+import OptimizedClapButton from '@/components/reactions/optmized-clap-button'
+import OptimizedFollowButton from '@/components/follow-button-optmizer'
 
 interface PostPageProps {
   params: { slug: string }
