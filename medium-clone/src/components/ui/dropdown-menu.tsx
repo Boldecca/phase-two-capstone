@@ -16,7 +16,6 @@ const DropdownMenuTrigger = React.forwardRef<
   if (asChild) {
     return React.cloneElement(children as React.ReactElement, {
       onClick: () => setIsOpen(!isOpen),
-      ref,
       ...props
     })
   }
