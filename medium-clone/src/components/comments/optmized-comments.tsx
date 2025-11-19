@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { useAuth } from '@/lib/auth-content'
 import { useComments } from '@/lib/swr-hooks'
+import { Comment } from '@/lib/post-types'
 import CommentItem from './comment-item'
 import CommentForm from './comment-form'
 import { Button } from '@/components/ui/button'
