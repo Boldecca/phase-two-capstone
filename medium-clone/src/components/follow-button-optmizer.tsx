@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/lib/auth-content'
 import { useFollowStatus } from '@/lib/swr-hooks'
 import { Button } from '@/components/ui/button'
 import { UserPlus, UserMinus } from 'lucide-react'

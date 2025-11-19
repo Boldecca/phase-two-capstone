@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/lib/auth-content'
 import { useReactions } from '@/lib/swr-hooks'
 import { Button } from '@/components/ui/button'
 import { Heart } from 'lucide-react'
