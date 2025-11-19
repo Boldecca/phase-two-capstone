@@ -3,6 +3,11 @@
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
+const TabsContext = React.createContext<{
+  value?: string
+  onValueChange?: (value: string) => void
+} | null>(null)
+
 const Tabs = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement> & { defaultValue?: string; value?: string; onValueChange?: (value: string) => void }
@@ -18,17 +23,15 @@ const Tabs = React.forwardRef<
   }
 
   return (
-    <div
-      ref={ref}
-      className={cn("w-full", className)}
-      {...props}
-    >
-      {React.Children.map(children, (child) =>
-        React.isValidElement(child)
-          ? React.cloneElement(child, { value: currentValue, onValueChange: handleValueChange })
-          : child
-      )}
-    </div>
+    <TabsContext.Provider value={{ value: currentValue, onValueChange: handleValueChange }}>
+      <div
+        ref={ref}
+        className={cn("w-full", className)}
+        {...props}
+      >
+        {children}
+      </div>
+    </TabsContext.Provider>
   )
 })
 Tabs.displayName = "Tabs"
@@ -95,10 +98,5 @@ const TabsContent = React.forwardRef<
   )
 })
 TabsContent.displayName = "TabsContent"
-
-const TabsContext = React.createContext<{
-  value?: string
-  onValueChange?: (value: string) => void
-} | null>(null)
 
 export { Tabs, TabsList, TabsTrigger, TabsContent }
