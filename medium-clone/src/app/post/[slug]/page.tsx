@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button'
 import { Share2, Bookmark, ArrowLeft } from 'lucide-react'
 import { Post } from '@/lib/post-types'
 import MarkdownPreview from '@/components/rich-editor/markdown-preview'
-import OptimizedCommentsSection from '@/components/comments/optimized-comments'
+import OptimizedCommentsSection from '@/components/comments/optmized-comments'
 import OptimizedClapButton from '@/components/reactions/optimized-clap-button'
 import OptimizedFollowButton from '@/components/follow-button-optimized'
 
