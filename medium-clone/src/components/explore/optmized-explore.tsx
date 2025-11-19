@@ -31,7 +31,7 @@ export default function OptimizedExplore() {
           </div>
         ) : tags.length > 0 ? (
           <div className="flex flex-wrap gap-3">
-            {tags.slice(0, 15).map((tag) => (
+            {tags.slice(0, 15).map((tag: { name: string; count: number }) => (
               <Link key={tag.name} href={`/tags/${tag.name.toLowerCase()}`}>
                 <div className="inline-flex items-center px-4 py-2 rounded-full border border-border bg-background hover:border-primary hover:bg-muted transition-colors cursor-pointer">
                   <span className="font-medium text-foreground">{tag.name}</span>
