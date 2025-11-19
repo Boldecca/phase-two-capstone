@@ -11,7 +11,12 @@
   "dependencies": {
     "next": "16.0.3",
     "react": "19.2.0",
-    "react-dom": "19.2.0"
+    "react-dom": "19.2.0",
+    "lucide-react": "^0.460.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.4",
+    "jose": "^5.9.6",
+    "swr": "^2.2.5"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

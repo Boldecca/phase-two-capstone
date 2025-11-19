@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
-import { Analytics } from '@vercel/analytics/next'
+// import { Analytics } from '@vercel/analytics/next'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
-import { AuthProvider } from '@/lib/auth-context'
+import { AuthProvider } from '@/lib/auth-content'
 import './globals.css'
 
 const geist = Geist({ subsets: ["latin"] })
@@ -57,7 +57,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
-          <Analytics />
+          {/* <Analytics /> */}
         </AuthProvider>
       </body>
     </html>

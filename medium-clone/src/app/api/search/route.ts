@@ -38,25 +38,24 @@ const mockPosts: Post[] = [
 export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url)
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '10')
+    const query = searchParams.get('q')
 
-    const startIndex = (page - 1) * limit
-    const endIndex = startIndex + limit
-    const posts = mockPosts.slice(startIndex, endIndex)
-
-    const pagination = {
-      page,
-      limit,
-      total: mockPosts.length,
-      pages: Math.ceil(mockPosts.length / limit),
-      hasMore: endIndex < mockPosts.length,
+    if (!query || query.length < 2) {
+      return NextResponse.json({ results: [] })
     }
 
-    return NextResponse.json({ posts, pagination })
+    // Simple search implementation - in production, use proper search engine
+    const results = mockPosts.filter(post => 
+      post.title.toLowerCase().includes(query.toLowerCase()) ||
+      post.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+      post.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase())) ||
+      post.authorName.toLowerCase().includes(query.toLowerCase())
+    )
+
+    return NextResponse.json({ results })
   } catch (error) {
     return NextResponse.json(
-      { error: 'Failed to fetch posts' },
+      { error: 'Search failed' },
       { status: 500 }
     )
   }

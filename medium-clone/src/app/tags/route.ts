@@ -1,24 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { postsStore } from '@/lib/posts-store'
 
-// GET all tags with post counts
+// Mock tags database - replace with real database in production
+const mockTags = [
+  { name: 'nextjs', count: 15 },
+  { name: 'react', count: 23 },
+  { name: 'development', count: 18 },
+  { name: 'web-development', count: 12 },
+  { name: 'ai', count: 8 },
+  { name: 'technology', count: 14 },
+  { name: 'javascript', count: 20 },
+  { name: 'typescript', count: 16 },
+]
+
 export async function GET(request: NextRequest) {
   try {
-    const allPosts = postsStore.getAllPublishedPosts()
-    const tagsMap = new Map<string, number>()
-
-    allPosts.forEach((post) => {
-      post.tags.forEach((tag) => {
-        tagsMap.set(tag, (tagsMap.get(tag) || 0) + 1)
-      })
-    })
-
-    const tags = Array.from(tagsMap.entries())
-      .map(([name, count]) => ({ name, count }))
-      .sort((a, b) => b.count - a.count)
-
-    return NextResponse.json({ tags })
+    return NextResponse.json({ tags: mockTags })
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch tags' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to fetch tags' },
+      { status: 500 }
+    )
   }
 }
