@@ -11,7 +11,7 @@ interface OptimizedFollowButtonProps {
 
 export default function OptimizedFollowButton({ userId }: OptimizedFollowButtonProps) {
   const { user, token } = useAuth()
-  const { isFollowing, followersCount, isLoading, mutate } = useFollowStatus(userId, token)
+  const { isFollowing, followersCount, isLoading, mutate } = useFollowStatus(userId, token || undefined)
 
   const handleToggleFollow = async () => {
     if (!token || !user) {
