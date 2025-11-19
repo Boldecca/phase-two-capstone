@@ -6,9 +6,10 @@ import { Post } from '@/lib/post-types'
 const mockPosts: Map<string, Post> = new Map()
 
 // GET post by ID
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ Id: string }> }) {
   try {
-    const post = mockPosts.get(params.id)
+    const { Id } = await params
+    const post = mockPosts.get(Id)
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
@@ -19,8 +20,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 }
 
 // PUT update post
-export async function PUT(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(request: NextRequest, { params }: { params: Promise<{ Id: string }> }) {
   try {
+    const { Id } = await params
     const token = request.headers.get('authorization')?.replace('Bearer ', '')
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -31,7 +33,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
     }
 
-    const post = mockPosts.get(params.id)
+    const post = mockPosts.get(Id)
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
@@ -52,7 +54,7 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
       publishedAt: status === 'published' && !post.publishedAt ? new Date().toISOString() : post.publishedAt,
       updatedAt: new Date().toISOString(),
     }
-    mockPosts.set(params.id, updated)
+    mockPosts.set(Id, updated)
 
     return NextResponse.json({ post: updated })
   } catch {
@@ -61,8 +63,9 @@ export async function PUT(request: NextRequest, { params }: { params: { id: stri
 }
 
 // DELETE post
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(request: NextRequest, { params }: { params: Promise<{ Id: string }> }) {
   try {
+    const { Id } = await params
     const token = request.headers.get('authorization')?.replace('Bearer ', '')
     if (!token) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
@@ -73,7 +76,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
     }
 
-    const post = mockPosts.get(params.id)
+    const post = mockPosts.get(Id)
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
@@ -82,7 +85,7 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
       return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
-    mockPosts.delete(params.id)
+    mockPosts.delete(Id)
     return NextResponse.json({ success: true })
   } catch {
     return NextResponse.json({ error: 'Failed to delete post' }, { status: 500 })
