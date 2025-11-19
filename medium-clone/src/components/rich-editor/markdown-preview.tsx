@@ -20,7 +20,7 @@ function markdownToHtml(md: string): string {
     // Italic
     .replace(/_(.*?)_/g, '<em>$1</em>')
     // Code blocks
-    .replace(/```(.*?)```/gs, '<pre className="bg-muted p-3 rounded overflow-x-auto"><code>$1</code></pre>')
+    .replace(/```([\s\S]*?)```/g, '<pre className="bg-muted p-3 rounded overflow-x-auto"><code>$1</code></pre>')
     // Inline code
     .replace(/`(.*?)`/g, '<code className="bg-muted px-2 py-1 rounded font-mono text-sm">$1</code>')
     // Blockquotes
