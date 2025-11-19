@@ -5,7 +5,7 @@ import { Post } from '@/lib/post-types'
 const mockPosts: Post[] = []
 
 // GET post by slug
-export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+export async function GET(request: NextRequest, { params }) {
   try {
     const { slug } = await params
     const post = mockPosts.find(p => p.slug === slug)
