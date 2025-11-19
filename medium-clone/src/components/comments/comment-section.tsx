@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/lib/auth-content'
 import { Comment } from '@/lib/post-types'
 import CommentItem from './comment-item'
 import CommentForm from './comment-form'

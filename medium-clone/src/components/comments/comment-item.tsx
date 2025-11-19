@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/lib/auth-content'
 import { Comment } from '@/lib/post-types'
 import { Button } from '@/components/ui/button'
 import { MessageSquare, Trash2, Heart } from 'lucide-react'

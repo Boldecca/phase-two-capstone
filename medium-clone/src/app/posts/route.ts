@@ -1,38 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { verifyToken } from '@/lib/auth'
-import { postsStore } from '@/lib/posts-store'
+import { Post } from '@/lib/post-types'
 
-// GET all published posts or search
-export async function GET(request: NextRequest) {
-  try {
-    const searchParams = new URL(request.url).searchParams
-    const query = searchParams.get('q')
-    const tags = searchParams.get('tags')?.split(',')
+// Mock posts database - replace with real database in production
+const mockPosts: Map<string, Post> = new Map()
 
-    let posts
-
-    if (query) {
-      posts = postsStore.searchPosts(query)
-    } else if (tags?.length) {
-      posts = postsStore.getPostsByTags(tags)
-    } else {
-      posts = postsStore.getAllPublishedPosts()
-    }
-
-    return NextResponse.json({ posts })
-  } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 })
-  }
-}
-
-// POST create new post
 export async function POST(request: NextRequest) {
   try {
-    const token = request.headers.get('authorization')?.replace('Bearer ', '')
-    if (!token) {
+    const authHeader = request.headers.get('authorization')
+    if (!authHeader?.startsWith('Bearer ')) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const token = authHeader.substring(7)
     const payload = await verifyToken(token)
     if (!payload) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
@@ -40,29 +20,37 @@ export async function POST(request: NextRequest) {
 
     const { title, content, excerpt, tags, status, authorName, authorUsername } = await request.json()
 
-    if (!title?.trim() || !content?.trim() || !excerpt?.trim()) {
-      return NextResponse.json(
-        { error: 'Title, content, and excerpt are required' },
-        { status: 400 }
-      )
+    if (!title || !content || !excerpt) {
+      return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
-    const post = postsStore.createPost({
+    const postId = `post_${Date.now()}`
+    const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')
+    const now = new Date().toISOString()
+
+    const post: Post = {
+      id: postId,
       title,
       content,
       excerpt,
-      tags: tags || [],
-      status: status || 'draft',
       authorId: payload.userId,
       authorName,
       authorUsername,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      publishedAt: status === 'published' ? new Date().toISOString() : undefined,
-    })
+      tags: tags || [],
+      slug,
+      status: status || 'draft',
+      createdAt: now,
+      updatedAt: now,
+      publishedAt: status === 'published' ? now : undefined,
+    }
+
+    mockPosts.set(postId, post)
 
     return NextResponse.json({ post }, { status: 201 })
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create post' }, { status: 500 })
+    return NextResponse.json(
+      { error: 'Failed to create post' },
+      { status: 500 }
+    )
   }
 }
