@@ -31,7 +31,7 @@ export async function GET(
     )
 
     return NextResponse.json({ posts })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Failed to fetch tag posts' }, { status: 500 })
   }
 }

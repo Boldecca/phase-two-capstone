@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Post } from '@/lib/post-types'
+import { Post } from '../../lib/post-types'
 
 // Mock posts database - replace with real database in production
 const mockPosts: Post[] = [
@@ -48,7 +48,7 @@ export async function GET(request: NextRequest) {
     )
 
     return NextResponse.json({ results, count: results.length })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Search failed' }, { status: 500 })
   }
 }

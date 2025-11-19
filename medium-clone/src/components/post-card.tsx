@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Post } from '@/lib/post-types'
 import { Heart, MessageCircle } from 'lucide-react'
 
@@ -26,9 +27,11 @@ export default function PostCard({ post, showAuthor = true, featured = false }: 
         <article className="group border border-border rounded-xl overflow-hidden transition-all hover:shadow-xl hover:border-primary/50 cursor-pointer bg-background">
           {/* Featured image */}
           <div className="relative overflow-hidden h-64 bg-muted">
-            <img 
+            <Image 
               src={postImage || "/placeholder.svg"}
               alt={post.title}
+              width={500}
+              height={300}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             />
           </div>

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { Share2, Bookmark, ArrowLeft } from 'lucide-react'
 import { Post } from '@/lib/post-types'
@@ -70,9 +71,11 @@ export default function PostPage({ params }: PostPageProps) {
   return (
     <div className="bg-background">
       <div className="relative h-96 sm:h-[500px] overflow-hidden bg-muted">
-        <img 
+        <Image 
           src={heroImage || "/placeholder.svg"}
           alt={post.title}
+          width={1200}
+          height={600}
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />

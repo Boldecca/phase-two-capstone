@@ -1,11 +1,11 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useAuth } from '@/lib/auth-content'
 import { Comment } from '@/lib/post-types'
 import CommentItem from './comment-item'
 import CommentForm from './comment-form'
-import { Button } from '@/components/ui/button'
+
 import { Loader } from 'lucide-react'
 
 interface CommentsSectionProps {
@@ -18,13 +18,9 @@ export default function CommentsSection({ postId }: CommentsSectionProps) {
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
   const [replyingTo, setReplyingTo] = useState<string | null>(null)
-  const [showForm, setShowForm] = useState(false)
 
-  useEffect(() => {
-    fetchComments()
-  }, [postId])
 
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     try {
       const response = await fetch(`/api/comments?postId=${postId}`)
       if (!response.ok) throw new Error('Failed to fetch comments')
@@ -35,7 +31,13 @@ export default function CommentsSection({ postId }: CommentsSectionProps) {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [postId])
+
+  useEffect(() => {
+    fetchComments()
+  }, [postId, fetchComments])
+
+
 
   const handleAddComment = async (content: string, parentCommentId?: string) => {
     if (!user || !token) return

@@ -65,7 +65,7 @@ export default function HomePage() {
                   Welcome to PublishHub
                 </span>
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-balance leading-tight">
-                  Share Your <span className="bg-gradient-to-r from-primary via-secondary to-tertiary bg-clip-text text-transparent">Ideas</span> with the World
+                  Share Your <span className="bg-linear-to-r from-primary via-secondary to-tertiary bg-clip-text text-transparent">Ideas</span> with the World
                 </h1>
                 <p className="text-lg sm:text-xl text-muted-foreground leading-relaxed max-w-2xl">
                   PublishHub is a modern platform for writers, developers, and creators to share stories, ideas, and expertise with a global audience. Start publishing today.
@@ -74,7 +74,7 @@ export default function HomePage() {
               
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link href="/write">
-                  <Button size="lg" className="gap-2 bg-gradient-to-r from-primary to-secondary hover:shadow-lg transition-all">
+                  <Button size="lg" className="gap-2 bg-linear-to-r from-primary to-secondary hover:shadow-lg transition-all">
                     Start Writing
                     <ArrowRight className="w-4 h-4" />
                   </Button>
@@ -91,7 +91,7 @@ export default function HomePage() {
             <div className="hidden lg:flex justify-center items-center">
               <div className="relative w-full max-w-md">
                 {/* Decorative gradient background */}
-                <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-secondary/20 to-tertiary/20 rounded-2xl blur-2xl -z-10" />
+                <div className="absolute -inset-4 bg-linear-to-br from-primary/20 via-secondary/20 to-tertiary/20 rounded-2xl blur-2xl -z-10" />
                 
                 {/* Hero Image */}
                 <Image
@@ -165,7 +165,7 @@ export default function HomePage() {
 
                   <div className="flex items-center justify-between pt-4 border-t border-border text-xs text-muted-foreground">
                     <div className="flex items-center gap-2">
-                      <div className="w-5 h-5 rounded-full bg-gradient-to-br from-primary to-secondary" />
+                      <div className="w-5 h-5 rounded-full bg-linear-to-br from-primary to-secondary" />
                       <span className="font-medium">{post.author}</span>
                     </div>
                     <span>{post.readTime}</span>
@@ -179,7 +179,7 @@ export default function HomePage() {
 
       {/* CTA Section */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16 mb-8">
-        <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-gradient-to-r from-primary/5 via-secondary/5 to-tertiary/5 p-8 sm:p-12 text-center shadow-lg">
+        <div className="relative overflow-hidden rounded-xl border border-primary/20 bg-linear-to-r from-primary/5 via-secondary/5 to-tertiary/5 p-8 sm:p-12 text-center shadow-lg">
           <div className="absolute inset-0 -z-10">
             <div className="absolute top-10 left-20 w-40 h-40 bg-primary/10 rounded-full blur-2xl" />
             <div className="absolute bottom-10 right-20 w-40 h-40 bg-secondary/10 rounded-full blur-2xl" />
@@ -192,7 +192,7 @@ export default function HomePage() {
             Join thousands of writers and creators building their audience on PublishHub. Start publishing today and connect with readers worldwide.
           </p>
           <Link href="/write">
-            <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:shadow-lg transition-all">
+            <Button size="lg" className="bg-linear-to-r from-primary to-secondary hover:shadow-lg transition-all">
               Create Your First Post
               <ArrowRight className="w-4 h-4 ml-2" />
             </Button>

@@ -19,7 +19,7 @@ export async function POST(request: NextRequest) {
       name: file.name,
       size: file.size,
     })
-  } catch (error) {
+  } catch {
     return NextResponse.json({ error: 'Image upload failed' }, { status: 500 })
   }
 }

@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 
 // Mock tags database - replace with real database in production
 const mockTags = [
@@ -12,10 +12,10 @@ const mockTags = [
   { name: 'typescript', count: 16 },
 ]
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     return NextResponse.json({ tags: mockTags })
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: 'Failed to fetch tags' },
       { status: 500 }
