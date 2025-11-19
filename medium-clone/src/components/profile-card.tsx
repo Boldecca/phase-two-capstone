@@ -1,6 +1,6 @@
 'use client'
 
-import { useAuth } from '@/lib/auth-context'
+import { useAuth } from '@/lib/auth-content'
 import { Button } from '@/components/ui/button'
 import { User, Mail, Calendar, Edit2 } from 'lucide-react'
 
