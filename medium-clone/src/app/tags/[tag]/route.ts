@@ -21,13 +21,11 @@ const mockPosts: Post[] = [
 ]
 
 // GET posts by tag
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { tag: string } }
-) {
+export async function GET(request: NextRequest, { params }) {
   try {
+    const { tag } = await params
     const posts = mockPosts.filter(post => 
-      post.tags.includes(params.tag.toLowerCase())
+      post.tags.includes(tag.toLowerCase())
     )
 
     return NextResponse.json({ posts })
