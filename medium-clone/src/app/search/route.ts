@@ -1,5 +1,24 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { postsStore } from '@/lib/posts-store'
+import { Post } from '@/lib/post-types'
+
+// Mock posts database - replace with real database in production
+const mockPosts: Post[] = [
+  {
+    id: '1',
+    title: 'Getting Started with Next.js 16',
+    content: 'Explore the latest features and improvements in Next.js 16...',
+    excerpt: 'Explore the latest features and improvements in Next.js 16, including React Compiler support and performance enhancements.',
+    authorId: '1',
+    authorName: 'Sarah Chen',
+    authorUsername: 'sarahchen',
+    tags: ['nextjs', 'react', 'development'],
+    slug: 'getting-started-nextjs',
+    status: 'published',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    publishedAt: new Date().toISOString(),
+  },
+]
 
 // GET search results with debouncing
 export async function GET(request: NextRequest) {
@@ -21,7 +40,12 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const results = postsStore.searchPosts(query)
+    const results = mockPosts.filter(post => 
+      post.title.toLowerCase().includes(query.toLowerCase()) ||
+      post.excerpt.toLowerCase().includes(query.toLowerCase()) ||
+      post.tags.some(tag => tag.toLowerCase().includes(query.toLowerCase())) ||
+      post.authorName.toLowerCase().includes(query.toLowerCase())
+    )
 
     return NextResponse.json({ results, count: results.length })
   } catch (error) {
