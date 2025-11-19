@@ -42,8 +42,8 @@ export default function MarkdownEditor({
   const handleNumberedList = useCallback(() => insertMarkdown('\n1. ', '\n'), [value])
   const handleCode = useCallback(() => insertMarkdown('\n```\n', '\n```\n'), [value])
   const handleQuote = useCallback(() => insertMarkdown('\n> ', '\n'), [value])
-  const handleLink = useCallback(() => insertMarkdown('[', '](https://)''), [value])
-  const handleImage = useCallback(() => insertMarkdown('![', '](https://)''), [value])
+  const handleLink = useCallback(() => insertMarkdown('[', '](https://)'), [value])
+  const handleImage = useCallback(() => insertMarkdown('![', '](https://)'), [value])
 
   return (
     <div className="border border-border rounded-lg overflow-hidden">
