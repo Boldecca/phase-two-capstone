@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { Button } from '@/components/ui/button'
 import { ArrowRight, Zap, Users, TrendingUp, Sparkles } from 'lucide-react'
 
@@ -93,9 +94,11 @@ export default function HomePage() {
                 <div className="absolute -inset-4 bg-gradient-to-br from-primary/20 via-secondary/20 to-tertiary/20 rounded-2xl blur-2xl -z-10" />
                 
                 {/* Hero Image */}
-                <img
+                <Image
                   src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/writer-publishing-platform-creative-workspace-xNo9PziFr5Y24KwGqwQShxTWNZHpSV.jpg"
                   alt="PublishHub - Share your ideas with the world"
+                  width={500}
+                  height={400}
                   className="w-full h-auto rounded-2xl shadow-2xl border border-primary/10 object-cover"
                 />
               </div>
@@ -137,9 +140,11 @@ export default function HomePage() {
               <article className="group cursor-pointer overflow-hidden rounded-lg border border-border bg-background transition-all hover:border-primary hover:shadow-lg">
                 {/* Image */}
                 <div className="relative overflow-hidden h-48 bg-muted">
-                  <img 
+                  <Image 
                     src={post.image || "/placeholder.svg"} 
                     alt={post.title}
+                    width={400}
+                    height={200}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                   <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary/90 text-primary-foreground text-xs font-medium backdrop-blur-sm">
