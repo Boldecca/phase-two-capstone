@@ -11,7 +11,7 @@ interface OptimizedClapButtonProps {
 
 export default function OptimizedClapButton({ postId }: OptimizedClapButtonProps) {
   const { user, token } = useAuth()
-  const { count, hasReacted, isLoading, mutate } = useReactions(postId, token)
+  const { count, hasReacted, isLoading, mutate } = useReactions(postId, token || undefined)
 
   const handleToggleReaction = async () => {
     if (!token) {
