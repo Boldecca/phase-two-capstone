@@ -21,7 +21,7 @@ const mockPosts: Post[] = [
 ]
 
 // GET posts by tag
-export async function GET(request: NextRequest, { params }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ tag: string }> }) {
   try {
     const { tag } = await params
     const posts = mockPosts.filter(post => 
