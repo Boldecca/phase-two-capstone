@@ -5,9 +5,10 @@ import { Post } from '@/lib/post-types'
 const mockPosts: Post[] = []
 
 // GET post by slug
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
-    const post = mockPosts.find(p => p.slug === params.slug)
+    const { slug } = await params
+    const post = mockPosts.find(p => p.slug === slug)
     if (!post) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
