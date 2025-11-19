@@ -55,7 +55,7 @@ export default function SearchPage() {
         </h1>
         {query && (
           <p className="text-lg text-muted-foreground">
-            Results for <span className="font-semibold">"{query}"</span>
+            Results for <span className="font-semibold">&ldquo;{query}&rdquo;</span>
           </p>
         )}
       </div>
@@ -84,7 +84,7 @@ export default function SearchPage() {
       ) : (
         <div className="text-center py-12">
           <p className="text-muted-foreground mb-4">
-            No posts found for "{query}"
+            No posts found for &ldquo;{query}&rdquo;
           </p>
           <p className="text-sm text-muted-foreground mb-8">
             Try different keywords or browse our tags below
