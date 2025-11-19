@@ -74,10 +74,10 @@ export default function Header() {
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="w-48">
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem>
                     <Link href="/profile" className="cursor-pointer">View Profile</Link>
                   </DropdownMenuItem>
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem>
                     <Link href="/profile/edit" className="cursor-pointer">Edit Profile</Link>
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
