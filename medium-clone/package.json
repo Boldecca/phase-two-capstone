@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "clsx": "^2.1.1",
+    "firebase": "^12.6.0",
     "jose": "^5.9.6",
     "lucide-react": "^0.460.0",
     "next": "16.0.3",
