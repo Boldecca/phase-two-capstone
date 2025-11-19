@@ -12,7 +12,7 @@ export default function HomePage() {
       date: 'Nov 14, 2025',
       readTime: '5 min read',
       slug: 'getting-started-nextjs',
-      image: '/next-js-development-modern-workspace.jpg',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/next-js-development-modern-workspace-Fb7MnZVVq6SuxtiE1cK3MHBWkh9vBz.jpg',
       category: 'Development',
     },
     {
@@ -23,7 +23,7 @@ export default function HomePage() {
       date: 'Nov 13, 2025',
       readTime: '8 min read',
       slug: 'future-web-development',
-      image: '/future-technology-digital-landscape.jpg',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/future-technology-digital-landscape-36ibjVoESvJqYlf5S8mIRoBad4s5Go.jpg',
       category: 'Technology',
     },
     {
@@ -34,7 +34,7 @@ export default function HomePage() {
       date: 'Nov 12, 2025',
       readTime: '10 min read',
       slug: 'typescript-best-practices',
-      image: '/typescript-code-programming.jpg',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/typescript-code-programming-G19xlvtC0F13l8qK5GDLI8tbqb6Rzt.jpg',
       category: 'Programming',
     },
   ]
@@ -94,7 +94,7 @@ export default function HomePage() {
                 
                 {/* Hero Image */}
                 <img
-                  src="/writer-publishing-platform-creative-workspace.jpg"
+                  src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/writer-publishing-platform-creative-workspace-xNo9PziFr5Y24KwGqwQShxTWNZHpSV.jpg"
                   alt="PublishHub - Share your ideas with the world"
                   className="w-full h-auto rounded-2xl shadow-2xl border border-primary/10 object-cover"
                 />
