@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
@@ -8,7 +8,7 @@ import PostCard from '@/components/post-card'
 import { Post } from '@/lib/post-types'
 import { ArrowLeft } from 'lucide-react'
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams()
   const query = searchParams.get('q') || ''
   const [results, setResults] = useState<Post[]>([])
@@ -95,5 +95,13 @@ export default function SearchPage() {
         </div>
       )}
     </div>
+  )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={<div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-12"><p className="text-muted-foreground">Loading...</p></div>}>
+      <SearchContent />
+    </Suspense>
   )
 }
