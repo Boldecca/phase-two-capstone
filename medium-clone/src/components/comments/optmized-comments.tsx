@@ -111,7 +111,7 @@ export default function OptimizedCommentsSection({ postId }: OptimizedCommentsSe
 
       {comments.length > 0 ? (
         <div className="space-y-4">
-          {comments.map((comment) => (
+          {comments.map((comment: Comment) => (
             <div key={comment.id}>
               <CommentItem
                 comment={comment}
