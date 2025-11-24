@@ -19,7 +19,7 @@ export default function PostCard({ post, showAuthor = true, featured = false }: 
 
   const readingTime = Math.ceil(post.content.split(/\s+/).length / 200)
 
-  const postImage = `/placeholder.svg?height=300&width=500&query=${encodeURIComponent(post.title)} blog article`
+  const postImage = post.coverImage || `/placeholder.svg?height=300&width=500&query=${encodeURIComponent(post.title)} blog article`
 
   if (featured) {
     return (
