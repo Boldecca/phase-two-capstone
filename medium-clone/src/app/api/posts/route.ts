@@ -6,21 +6,8 @@ import { adminDb } from '@/lib/firebase-admin'
 
 
 export async function GET() {
-  try {
-    const postsSnapshot = await adminDb.collection('posts')
-      .where('status', '==', 'published')
-      .orderBy('createdAt', 'desc')
-      .get()
-    
-    const posts = postsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-    
-    return NextResponse.json({ posts })
-  } catch {
-    return NextResponse.json(
-      { error: 'Failed to fetch posts' },
-      { status: 500 }
-    )
-  }
+  console.log('=== GET /api/posts called ===')
+  return NextResponse.json({ posts: [], message: 'API working' })
 }
 
 export async function POST(request: NextRequest) {
