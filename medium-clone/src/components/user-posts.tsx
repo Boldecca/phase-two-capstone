@@ -22,8 +22,7 @@ export default function UserPosts({ userId }: UserPostsProps) {
 
   const fetchUserPosts = async () => {
     try {
-      // For now, get all posts and filter by author
-      const response = await fetch('/api/feed')
+      const response = await fetch('/api/posts')
       if (response.ok) {
         const data = await response.json()
         const userPosts = data.posts.filter((post: Post) => post.authorId === userId)

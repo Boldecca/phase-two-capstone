@@ -1,21 +1,31 @@
 import { NextResponse } from 'next/server'
-
-// Mock tags database - replace with real database in production
-const mockTags = [
-  { name: 'nextjs', count: 15 },
-  { name: 'react', count: 23 },
-  { name: 'development', count: 18 },
-  { name: 'web-development', count: 12 },
-  { name: 'ai', count: 8 },
-  { name: 'technology', count: 14 },
-  { name: 'javascript', count: 20 },
-  { name: 'typescript', count: 16 },
-]
+import { adminDb } from '@/lib/firebase-admin'
 
 export async function GET() {
   try {
-    return NextResponse.json({ tags: mockTags })
-  } catch {
+    const postsSnapshot = await adminDb
+      .collection('posts')
+      .where('status', '==', 'published')
+      .get()
+
+    const tagCounts: Record<string, number> = {}
+    
+    postsSnapshot.docs.forEach(doc => {
+      const post = doc.data()
+      if (post.tags && Array.isArray(post.tags)) {
+        post.tags.forEach((tag: string) => {
+          tagCounts[tag] = (tagCounts[tag] || 0) + 1
+        })
+      }
+    })
+
+    const tags = Object.entries(tagCounts)
+      .map(([name, count]) => ({ name, count }))
+      .sort((a, b) => b.count - a.count)
+
+    return NextResponse.json({ tags })
+  } catch (error) {
+    console.error('Error fetching tags:', error)
     return NextResponse.json(
       { error: 'Failed to fetch tags' },
       { status: 500 }
