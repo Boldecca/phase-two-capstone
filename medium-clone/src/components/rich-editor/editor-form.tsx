@@ -30,7 +30,10 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
     excerpt: initialDraft?.excerpt || '',
     content: initialDraft?.content || '',
     tags: initialDraft?.tags?.join(', ') || '',
+    coverImage: '',
   })
+  const [coverImageFile, setCoverImageFile] = useState<File | null>(null)
+  const [coverImagePreview, setCoverImagePreview] = useState<string | null>(null)
 
   // Auto-save to localStorage every 30 seconds
   useEffect(() => {
@@ -68,6 +71,18 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
 
   const handleContentChange = (content: string) => {
     setFormData(prev => ({ ...prev, content }))
+  }
+
+  const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      setCoverImageFile(file)
+      const reader = new FileReader()
+      reader.onload = () => {
+        setCoverImagePreview(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   const handleSaveDraft = async (e: React.FormEvent) => {
@@ -120,6 +135,25 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
 
       console.log('Publishing post...', { title: formData.title, token: !!token })
       
+      let coverImageUrl = ''
+      if (coverImageFile) {
+        const imageFormData = new FormData()
+        imageFormData.append('image', coverImageFile)
+        
+        const imageResponse = await fetch('/api/images/upload', {
+          method: 'POST',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+          body: imageFormData,
+        })
+        
+        if (imageResponse.ok) {
+          const imageData = await imageResponse.json()
+          coverImageUrl = imageData.url
+        }
+      }
+      
       const response = await fetch('/api/posts', {
         method: 'POST',
         headers: {
@@ -134,6 +168,7 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
           status: 'published',
           authorName: user.name,
           authorUsername: user.username,
+          coverImage: coverImageUrl,
         }),
       })
       
@@ -186,6 +221,27 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
             required
             className="text-lg font-semibold"
           />
+        </div>
+
+        <div className="space-y-2">
+          <Label htmlFor="coverImage">Cover Image</Label>
+          <Input
+            id="coverImage"
+            name="coverImage"
+            type="file"
+            accept="image/*"
+            onChange={handleCoverImageChange}
+            className="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-primary-foreground hover:file:bg-primary/90"
+          />
+          {coverImagePreview && (
+            <div className="mt-2">
+              <img
+                src={coverImagePreview}
+                alt="Cover preview"
+                className="w-full h-48 object-cover rounded-lg border border-border"
+              />
+            </div>
+          )}
         </div>
 
         <div className="space-y-2">

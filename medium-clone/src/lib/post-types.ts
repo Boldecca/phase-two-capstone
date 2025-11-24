@@ -21,6 +21,7 @@ export interface Post {
   createdAt: string
   updatedAt: string
   publishedAt?: string
+  coverImage?: string
 }
 
 export interface Comment {

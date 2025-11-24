@@ -67,7 +67,7 @@ export default function PostPage({ params }: PostPageProps) {
   })
 
   const readingTime = Math.ceil(post.content.split(/\s+/).length / 200)
-  const heroImage = `/placeholder.svg?height=600&width=1200&query=${encodeURIComponent(post.title)} blog post hero`
+  const heroImage = post.coverImage || `/placeholder.svg?height=600&width=1200&query=${encodeURIComponent(post.title)} blog post hero`
 
   return (
     <div className="bg-background">

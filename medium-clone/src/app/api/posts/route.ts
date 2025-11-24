@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
     console.log('Request body:', body)
-    const { title, content, excerpt, tags, status, authorName, authorUsername } = body
+    const { title, content, excerpt, tags, status, authorName, authorUsername, coverImage } = body
 
     if (!title || !content || !excerpt) {
       console.log('Missing required fields:', { title: !!title, content: !!content, excerpt: !!excerpt })
@@ -84,6 +84,7 @@ export async function POST(request: NextRequest) {
       createdAt: now,
       updatedAt: now,
       publishedAt: status === 'published' ? now : undefined,
+      coverImage: coverImage || undefined,
     }
 
     mockPosts.set(postId, post)
