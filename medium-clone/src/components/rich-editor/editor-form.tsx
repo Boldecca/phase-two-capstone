@@ -118,6 +118,8 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
         throw new Error('Please add an excerpt')
       }
 
+      console.log('Publishing post...', { title: formData.title, token: !!token })
+      
       const response = await fetch('/api/posts', {
         method: 'POST',
         headers: {
@@ -134,6 +136,8 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
           authorUsername: user.username,
         }),
       })
+      
+      console.log('Response status:', response.status)
 
       if (!response.ok) {
         const data = await response.json()
@@ -143,7 +147,7 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
       const { post } = await response.json()
       localStorage.removeItem('current_draft')
       setSuccess('Post published successfully!')
-      setTimeout(() => router.push(`/posts/${post.slug}`), 2000)
+      setTimeout(() => router.push(`/`), 2000)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to publish')
     } finally {
