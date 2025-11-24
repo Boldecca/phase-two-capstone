@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import ProfileCard from '@/components/profile-card'
+import UserPosts from '@/components/user-posts'
 
 export default function ProfilePage() {
   const { user, isLoading, logout } = useAuth()
@@ -41,12 +42,7 @@ export default function ProfilePage() {
         <ProfileCard />
 
         <div className="md:col-span-2">
-          <div className="border border-border rounded-lg p-6">
-            <h2 className="text-xl font-bold text-foreground mb-4">Your Posts</h2>
-            <p className="text-muted-foreground">
-              Your published posts will appear here. Posts CRUD will be implemented in Lab 4.
-            </p>
-          </div>
+          <UserPosts userId={user.id} />
         </div>
       </div>
     </div>

@@ -147,7 +147,7 @@ export default function EditorForm({ initialDraft, onSave }: EditorFormProps) {
       const { post } = await response.json()
       localStorage.removeItem('current_draft')
       setSuccess('Post published successfully!')
-      setTimeout(() => router.push(`/`), 2000)
+      setTimeout(() => router.push(`/profile`), 1000)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Failed to publish')
     } finally {
