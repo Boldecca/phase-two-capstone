@@ -19,7 +19,7 @@ export default function PostCard({ post, showAuthor = true, featured = false }: 
 
   const readingTime = Math.ceil(post.content.split(/\s+/).length / 200)
 
-  const postImage = post.coverImage || `/placeholder.svg?height=300&width=500&query=${encodeURIComponent(post.title)} blog article`
+  const postImage = post.coverImage || '/writer-publishing-platform-creative-workspace.jpg'
 
   if (featured) {
     return (
@@ -33,6 +33,10 @@ export default function PostCard({ post, showAuthor = true, featured = false }: 
               width={500}
               height={300}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement
+                target.src = '/writer-publishing-platform-creative-workspace.jpg'
+              }}
             />
           </div>
 

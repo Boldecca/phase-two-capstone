@@ -1,23 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { signToken, JWTPayload } from '@/lib/auth';
+import { signToken } from '@/lib/auth';
 import { validateEmail, validatePassword, validateUsername } from '@/lib/validators';
+import { adminDb } from '@/lib/firebase-admin';
 import { User } from '@/lib/types';
-
-// Mock user database - replace with real database in production
-export const users: Map<string, User & { password: string }> = new Map();
-
-// Add test user for demo
-if (users.size === 0) {
-  users.set('test@example.com', {
-    id: 'test-user-1',
-    email: 'test@example.com',
-    username: 'testuser',
-    name: 'Test User',
-    password: 'Test123!',
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
-  });
-}
 
 export async function POST(request: NextRequest) {
   try {
@@ -44,7 +29,8 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if user exists
-    if (users.has(email.toLowerCase())) {
+    const existingUser = await adminDb.collection('users').where('email', '==', email.toLowerCase()).get();
+    if (!existingUser.empty) {
       return NextResponse.json({ error: 'Email already registered' }, { status: 400 });
     }
 
@@ -57,12 +43,12 @@ export async function POST(request: NextRequest) {
       email: email.toLowerCase(),
       username,
       name,
-      password, // In production, hash this with bcrypt
+      password,
       createdAt: now,
       updatedAt: now,
     };
 
-    users.set(email.toLowerCase(), user);
+    await adminDb.collection('users').doc(userId).set(user);
 
     // Generate token
     const token = await signToken({

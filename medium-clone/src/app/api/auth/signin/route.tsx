@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { signToken } from '@/lib/auth';
 import { validateEmail } from '@/lib/validators';
-
-// Import users from signup route
-import { users } from '../signup/route';
+import { adminDb } from '@/lib/firebase-admin';
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,10 +11,20 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
     }
 
-    // Find user (in production, use real database)
-    const user = users.get(email.toLowerCase());
+    // Find user in Firebase
+    const userQuery = await adminDb.collection('users').where('email', '==', email.toLowerCase()).get();
+    
+    if (userQuery.empty) {
+      return NextResponse.json(
+        { error: 'Invalid email or password' },
+        { status: 401 }
+      );
+    }
 
-    if (!user || user.password !== password) {
+    const userDoc = userQuery.docs[0];
+    const user = userDoc.data();
+
+    if (user.password !== password) {
       return NextResponse.json(
         { error: 'Invalid email or password' },
         { status: 401 }

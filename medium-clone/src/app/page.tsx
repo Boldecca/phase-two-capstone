@@ -29,6 +29,42 @@ export default function HomePage() {
 
     fetchPosts()
   }, [])
+  const featuredPosts = [
+    {
+      id: 'featured-1',
+      title: 'Getting Started with Next.js 16',
+      excerpt: 'Explore the latest features and improvements in Next.js 16, including React Compiler support and performance enhancements.',
+      author: 'Sarah Chen',
+      date: 'Nov 14, 2025',
+      readTime: '5 min read',
+      slug: 'getting-started-nextjs',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/next-js-development-modern-workspace-Fb7MnZVVq6SuxtiE1cK3MHBWkh9vBz.jpg',
+      category: 'Development',
+    },
+    {
+      id: 'featured-2',
+      title: 'The Future of Web Development',
+      excerpt: 'Exploring emerging trends, AI integration, and technologies shaping the web development landscape in 2025 and beyond.',
+      author: 'Alex Johnson',
+      date: 'Nov 13, 2025',
+      readTime: '8 min read',
+      slug: 'future-web-development',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/future-technology-digital-landscape-36ibjVoESvJqYlf5S8mIRoBad4s5Go.jpg',
+      category: 'Technology',
+    },
+    {
+      id: 'featured-3',
+      title: 'TypeScript Best Practices',
+      excerpt: 'Master advanced TypeScript patterns, type safety, and best practices for building scalable, maintainable applications.',
+      author: 'Jordan Lee',
+      date: 'Nov 12, 2025',
+      readTime: '10 min read',
+      slug: 'typescript-best-practices',
+      image: 'https://hebbkx1anhila5yf.public.blob.vercel-storage.com/attachments/gen-images/public/typescript-code-programming-G19xlvtC0F13l8qK5GDLI8tbqb6Rzt.jpg',
+      category: 'Programming',
+    },
+  ]
+
   const features = [
     { icon: Zap, title: 'Lightning Fast', description: 'Built with performance in mind. Read articles instantly.' },
     { icon: Users, title: 'Community Driven', description: 'Connect with thousands of writers and readers worldwide.' },
@@ -116,11 +152,61 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Latest Posts */}
+      {/* Featured Posts */}
       <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
         <div className="mb-12">
-          <h2 className="text-4xl font-bold text-foreground mb-3">Latest Stories</h2>
-          <p className="text-lg text-muted-foreground">Discover the newest posts from our community</p>
+          <h2 className="text-4xl font-bold text-foreground mb-3">Featured Stories</h2>
+          <p className="text-lg text-muted-foreground">Discover the latest and most popular posts from our community</p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredPosts.map((post) => (
+            <Link key={post.id} href={`/posts/${post.slug}`}>
+              <article className="group cursor-pointer overflow-hidden rounded-lg border border-border bg-background transition-all hover:border-primary hover:shadow-lg">
+                <div className="relative overflow-hidden h-48 bg-muted">
+                  <Image 
+                    src={post.image || "/writer-publishing-platform-creative-workspace.jpg"} 
+                    alt={post.title}
+                    width={400}
+                    height={200}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement
+                      target.src = '/writer-publishing-platform-creative-workspace.jpg'
+                    }}
+                  />
+                  <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-primary/90 text-primary-foreground text-xs font-medium backdrop-blur-sm">
+                    {post.category}
+                  </span>
+                </div>
+                <div className="p-6 space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                      {post.title}
+                    </h3>
+                    <p className="text-sm text-muted-foreground line-clamp-2">
+                      {post.excerpt}
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between pt-4 border-t border-border text-xs text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <div className="w-5 h-5 rounded-full bg-linear-to-br from-primary to-secondary" />
+                      <span className="font-medium">{post.author}</span>
+                    </div>
+                    <span>{post.readTime}</span>
+                  </div>
+                </div>
+              </article>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* Latest Community Posts */}
+      <section className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-16">
+        <div className="mb-12">
+          <h2 className="text-4xl font-bold text-foreground mb-3">Latest from Community</h2>
+          <p className="text-lg text-muted-foreground">Fresh stories from our writers</p>
         </div>
 
         {isLoading ? (
@@ -135,7 +221,7 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <p className="text-muted-foreground mb-4">No posts yet. Be the first to share your story!</p>
+            <p className="text-muted-foreground mb-4">No community posts yet. Be the first to share your story!</p>
             <Link href="/write">
               <Button>Write First Post</Button>
             </Link>
