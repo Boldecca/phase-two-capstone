@@ -1,8 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { Post } from '@/lib/post-types'
 
+// Import posts from the main posts route
+import { mockPosts } from '../posts/route'
+
 // Mock posts database - replace with real database in production
-const mockPosts: Post[] = [
+const mockPostsArray: Post[] = [
   {
     id: '1',
     title: 'Getting Started with Next.js 16',
@@ -43,14 +46,15 @@ export async function GET(request: NextRequest) {
 
     const startIndex = (page - 1) * limit
     const endIndex = startIndex + limit
-    const posts = mockPosts.slice(startIndex, endIndex)
+    const allPosts = Array.from(mockPosts.values()).concat(mockPostsArray)
+    const posts = allPosts.slice(startIndex, endIndex)
 
     const pagination = {
       page,
       limit,
-      total: mockPosts.length,
+      total: allPosts.length,
       pages: Math.ceil(mockPosts.length / limit),
-      hasMore: endIndex < mockPosts.length,
+      hasMore: endIndex < allPosts.length,
     }
 
     return NextResponse.json({ posts, pagination })

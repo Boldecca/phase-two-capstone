@@ -3,7 +3,27 @@ import { verifyToken } from '@/lib/auth'
 import { Post } from '@/lib/post-types'
 
 // Mock posts database - replace with real database in production
-const mockPosts: Map<string, Post> = new Map()
+export const mockPosts: Map<string, Post> = new Map()
+
+// Add some sample posts for demo
+if (mockPosts.size === 0) {
+  const samplePost: Post = {
+    id: 'sample-1',
+    title: 'Welcome to PublishHub',
+    content: '# Welcome to PublishHub\n\nThis is a sample post to demonstrate the platform. You can create, edit, and publish your own posts!',
+    excerpt: 'A sample post to demonstrate the PublishHub platform features.',
+    authorId: 'sample-author',
+    authorName: 'Demo Author',
+    authorUsername: 'demo',
+    tags: ['welcome', 'demo'],
+    slug: 'welcome-to-publishhub',
+    status: 'published',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+    publishedAt: new Date().toISOString(),
+  }
+  mockPosts.set('sample-1', samplePost)
+}
 
 export async function POST(request: NextRequest) {
   try {
