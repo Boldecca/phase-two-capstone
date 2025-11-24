@@ -1,14 +1,16 @@
 'use client'
 
+import { use } from 'react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
 import { Mail, Cake } from 'lucide-react'
 
 interface AuthorPageProps {
-  params: { username: string }
+  params: Promise<{ username: string }>
 }
 
 export default function AuthorPage({ params }: AuthorPageProps) {
+  const { username } = use(params)
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
       <div className="max-w-3xl">
@@ -17,7 +19,7 @@ export default function AuthorPage({ params }: AuthorPageProps) {
           <div className="flex items-start justify-between mb-6">
             <div>
               <h1 className="text-3xl font-bold text-foreground mb-2">Author Name</h1>
-              <p className="text-muted-foreground">@{params.username}</p>
+              <p className="text-muted-foreground">@{username}</p>
             </div>
             <Button>Follow</Button>
           </div>

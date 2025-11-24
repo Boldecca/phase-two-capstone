@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, use } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
@@ -12,10 +12,11 @@ import OptimizedClapButton from '@/components/reactions/optmized-clap-button'
 import OptimizedFollowButton from '@/components/follow-button-optmizer'
 
 interface PostPageProps {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 export default function PostPage({ params }: PostPageProps) {
+  const { slug } = use(params)
   const [post, setPost] = useState<Post | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -24,7 +25,7 @@ export default function PostPage({ params }: PostPageProps) {
   useEffect(() => {
     const fetchPost = async () => {
       try {
-        const response = await fetch(`/api/posts/slug/${params.slug}`)
+        const response = await fetch(`/api/posts/slug/${slug}`)
         if (!response.ok) {
           throw new Error('Post not found')
         }
@@ -38,7 +39,7 @@ export default function PostPage({ params }: PostPageProps) {
     }
 
     fetchPost()
-  }, [params.slug])
+  }, [slug])
 
   if (isLoading) {
     return (

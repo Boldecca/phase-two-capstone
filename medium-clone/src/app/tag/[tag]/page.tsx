@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, use } from 'react'
 import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import PostCard from '@/components/post-card'
@@ -8,14 +8,15 @@ import { Post } from '@/lib/post-types'
 import { ArrowLeft } from 'lucide-react'
 
 interface TagPageProps {
-  params: { tag: string }
+  params: Promise<{ tag: string }>
 }
 
 export default function TagPage({ params }: TagPageProps) {
+  const { tag: rawTag } = use(params)
   const [posts, setPosts] = useState<Post[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const tag = decodeURIComponent(params.tag)
+  const tag = decodeURIComponent(rawTag)
 
   useEffect(() => {
     const fetchTagPosts = async () => {
