@@ -6,8 +6,16 @@ import { adminDb } from '@/lib/firebase-admin'
 
 
 export async function GET() {
-  console.log('=== GET /api/posts called ===')
-  return NextResponse.json({ posts: [], message: 'API working' })
+  try {
+    console.log('=== GET /api/posts called ===')
+    const postsSnapshot = await adminDb.collection('posts').orderBy('createdAt', 'desc').get()
+    const posts = postsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+    console.log(`Found ${posts.length} posts`)
+    return NextResponse.json({ posts })
+  } catch (error) {
+    console.error('Error fetching posts:', error)
+    return NextResponse.json({ error: 'Failed to fetch posts' }, { status: 500 })
+  }
 }
 
 export async function POST(request: NextRequest) {
@@ -61,7 +69,8 @@ export async function POST(request: NextRequest) {
     console.log('Post created successfully:', postId)
 
     return NextResponse.json({ post }, { status: 201 })
-  } catch {
+  } catch (error) {
+    console.error('Error creating post:', error)
     return NextResponse.json(
       { error: 'Failed to create post' },
       { status: 500 }
