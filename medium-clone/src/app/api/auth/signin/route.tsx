@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { signToken } from '@/lib/auth';
 import { validateEmail } from '@/lib/validators';
 
-// Mock user database
-const users = new Map<string, any>();
+// Import users from signup route
+import { users } from '../signup/route';
 
 export async function POST(request: NextRequest) {
   try {

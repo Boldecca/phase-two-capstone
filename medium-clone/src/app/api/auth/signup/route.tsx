@@ -4,7 +4,20 @@ import { validateEmail, validatePassword, validateUsername } from '@/lib/validat
 import { User } from '@/lib/types';
 
 // Mock user database - replace with real database in production
-const users: Map<string, User & { password: string }> = new Map();
+export const users: Map<string, User & { password: string }> = new Map();
+
+// Add test user for demo
+if (users.size === 0) {
+  users.set('test@example.com', {
+    id: 'test-user-1',
+    email: 'test@example.com',
+    username: 'testuser',
+    name: 'Test User',
+    password: 'Test123!',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  });
+}
 
 export async function POST(request: NextRequest) {
   try {
