@@ -27,8 +27,12 @@ if (mockPosts.size === 0) {
 
 export async function POST(request: NextRequest) {
   try {
+    console.log('POST /api/posts called')
     const authHeader = request.headers.get('authorization')
+    console.log('Auth header:', authHeader ? 'present' : 'missing')
+    
     if (!authHeader?.startsWith('Bearer ')) {
+      console.log('No valid auth header')
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
@@ -38,9 +42,12 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid token' }, { status: 401 })
     }
 
-    const { title, content, excerpt, tags, status, authorName, authorUsername } = await request.json()
+    const body = await request.json()
+    console.log('Request body:', body)
+    const { title, content, excerpt, tags, status, authorName, authorUsername } = body
 
     if (!title || !content || !excerpt) {
+      console.log('Missing required fields:', { title: !!title, content: !!content, excerpt: !!excerpt })
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
     }
 
@@ -65,6 +72,8 @@ export async function POST(request: NextRequest) {
     }
 
     mockPosts.set(postId, post)
+    console.log('Post created successfully:', postId)
+    console.log('Total posts now:', mockPosts.size)
 
     return NextResponse.json({ post }, { status: 201 })
   } catch {
