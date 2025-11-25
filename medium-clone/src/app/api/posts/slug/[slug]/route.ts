@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { mockPosts } from '../../route'
+import { adminDb } from '@/lib/firebase-admin'
 
 export async function GET(
   request: NextRequest,
@@ -8,14 +8,22 @@ export async function GET(
   try {
     const { slug } = await params
     
-    const post = Array.from(mockPosts.values()).find(p => p.slug === slug)
+    const postsSnapshot = await adminDb
+      .collection('posts')
+      .where('slug', '==', slug)
+      .where('status', '==', 'published')
+      .get()
     
-    if (!post) {
+    if (postsSnapshot.empty) {
       return NextResponse.json({ error: 'Post not found' }, { status: 404 })
     }
 
+    const postDoc = postsSnapshot.docs[0]
+    const post = { id: postDoc.id, ...postDoc.data() }
+
     return NextResponse.json({ post })
-  } catch {
+  } catch (error) {
+    console.error('Error fetching post by slug:', error)
     return NextResponse.json(
       { error: 'Failed to fetch post' },
       { status: 500 }
