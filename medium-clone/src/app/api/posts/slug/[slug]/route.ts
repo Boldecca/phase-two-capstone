@@ -8,6 +8,10 @@ export async function GET(
   try {
     const { slug } = await params
     
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Database not available' }, { status: 503 })
+    }
+    
     const postsSnapshot = await adminDb
       .collection('posts')
       .where('slug', '==', slug)
