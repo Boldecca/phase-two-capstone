@@ -7,6 +7,10 @@ export async function GET(request: NextRequest) {
     const page = parseInt(searchParams.get('page') || '1')
     const limit = parseInt(searchParams.get('limit') || '10')
 
+    if (!adminDb) {
+      return NextResponse.json({ posts: [], pagination: { page, limit, total: 0, pages: 0, hasMore: false } })
+    }
+
     // Fetch published posts from Firebase
     const postsSnapshot = await adminDb
       .collection('posts')
