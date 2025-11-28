@@ -53,7 +53,7 @@ export async function GET(request: NextRequest) {
       page,
       limit,
       total: allPosts.length,
-      pages: Math.ceil(mockPosts.length / limit),
+      pages: Math.ceil(allPosts.length / limit),
       hasMore: endIndex < allPosts.length,
     }
 
