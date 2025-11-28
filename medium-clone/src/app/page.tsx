@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Zap, Users, TrendingUp, Sparkles } from 'lucide-react'
+import { ArrowRight, Zap, Users, TrendingUp, Sparkles, Heart, MessageCircle } from 'lucide-react'
 import PostCard from '@/components/post-card'
 import { Post } from '@/lib/post-types'
 
@@ -193,7 +193,23 @@ export default function HomePage() {
                       <div className="w-5 h-5 rounded-full bg-linear-to-br from-primary to-secondary" />
                       <span className="font-medium">{post.author}</span>
                     </div>
-                    <span>{post.readTime}</span>
+                    <div className="flex items-center gap-3">
+                      <button className="flex items-center gap-1 hover:text-red-500 transition-colors">
+                        <Heart className="w-4 h-4" />
+                        <span>18</span>
+                      </button>
+                      <button 
+                        onClick={(e) => {
+                          e.preventDefault()
+                          window.location.href = `/posts/${post.slug}#comments`
+                        }}
+                        className="flex items-center gap-1 hover:text-blue-500 transition-colors"
+                      >
+                        <MessageCircle className="w-4 h-4" />
+                        <span>6</span>
+                      </button>
+                      <span>{post.readTime}</span>
+                    </div>
                   </div>
                 </div>
               </article>
