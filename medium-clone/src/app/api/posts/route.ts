@@ -8,6 +8,9 @@ import { adminDb } from '@/lib/firebase-admin'
 export async function GET() {
   try {
     console.log('=== GET /api/posts called ===')
+    if (!adminDb) {
+      return NextResponse.json({ posts: [] })
+    }
     const postsSnapshot = await adminDb.collection('posts').orderBy('createdAt', 'desc').get()
     const posts = postsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
     console.log(`Found ${posts.length} posts`)
@@ -42,6 +45,10 @@ export async function POST(request: NextRequest) {
     if (!title || !content || !excerpt) {
       console.log('Missing required fields:', { title: !!title, content: !!content, excerpt: !!excerpt })
       return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+    }
+
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Database not available' }, { status: 503 })
     }
 
     const postId = `post_${Date.now()}`

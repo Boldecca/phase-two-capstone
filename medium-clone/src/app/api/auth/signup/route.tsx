@@ -28,6 +28,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Database not available' }, { status: 503 });
+    }
+
     // Check if user exists
     const existingUser = await adminDb.collection('users').where('email', '==', email.toLowerCase()).get();
     if (!existingUser.empty) {

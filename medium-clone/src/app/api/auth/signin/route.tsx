@@ -11,6 +11,10 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Invalid email format' }, { status: 400 });
     }
 
+    if (!adminDb) {
+      return NextResponse.json({ error: 'Database not available' }, { status: 503 });
+    }
+
     // Find user in Firebase
     const userQuery = await adminDb.collection('users').where('email', '==', email.toLowerCase()).get();
     
